@@ -146,3 +146,9 @@ php artisan make:model ModelName -mf
 - **Code Style**: Laravel Pint
 - **Static Analysis**: PHPStan (max level) with Larastan
 - **Code Quality**: PHPMD (PHP Mess Detector), PHPMND (PHP Magic Number Detector)
+
+## Code Architecture Best Practices
+
+- **Service Layer Guidance**:
+  - Never write business logic or use models directly in the controllers
+  - Move all business logic to the service layer
