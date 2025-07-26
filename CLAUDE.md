@@ -134,8 +134,7 @@ php artisan make:model ModelName -mf
 ### Testing
 - Uses **Pest PHP** testing framework
 - Test configuration in `tests/Pest.php`
-- Feature tests: `tests/Feature/`
-- Unit tests: `tests/Unit/`
+- Endpoint tests: `tests/Endpoints/`
 - Base test case: `tests/TestCase.php`
 
 ## Key Technologies
