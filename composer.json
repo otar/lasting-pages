@@ -68,7 +68,7 @@
             "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpstan analyse --memory-limit=1G",
             "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmd app text phpmd.xml",
             "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmnd app --progress",
-            "php -d error_reporting='E_ALL & ~E_DEPRECATED' artisan test"
+            "php -d error_reporting='E_ALL & ~E_DEPRECATED' artisan test --coverage --min=100"
         ],
         "coverage": [
             "@php -d error_reporting='E_ALL & ~E_DEPRECATED' artisan test --coverage --coverage-html=storage/coverage-report",
