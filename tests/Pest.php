@@ -26,9 +26,10 @@ pest()->extend(Tests\TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+// Custom expectations can be added here if needed
+// expect()->extend('toBeOne', function () {
+//     return $this->toBe(1);
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,4 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
-}
+// Helper functions can be added here if needed

@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -31,7 +33,7 @@ class LoginController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
 
