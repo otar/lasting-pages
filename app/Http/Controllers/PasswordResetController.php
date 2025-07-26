@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 
-class PasswordResetController extends Controller
+class PasswordResetController
 {
     public function __construct(
         private readonly PasswordResetService $passwordResetService

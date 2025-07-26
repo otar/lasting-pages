@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class LoginController
 {
     public function __construct(
         private readonly AuthService $authService
