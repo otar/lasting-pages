@@ -73,8 +73,14 @@ php artisan test --coverage
 # Run PHP Magic Number Detector
 ./vendor/bin/phpmnd app --progress
 
-# Run all code quality checks
+# Run all code quality checks (includes tests)
 composer qa
+
+# Generate coverage report
+composer coverage
+
+# Open coverage report (after running composer coverage)
+open storage/coverage-report/index.html
 ```
 
 ### Git Hooks

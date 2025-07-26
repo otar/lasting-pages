@@ -65,9 +65,14 @@
         ],
         "qa": [
             "./vendor/bin/pint --test",
-            "./vendor/bin/phpstan analyse --memory-limit=256M",
+            "./vendor/bin/phpstan analyse --memory-limit=1G",
             "./vendor/bin/phpmd app text phpmd.xml",
-            "./vendor/bin/phpmnd app --progress"
+            "./vendor/bin/phpmnd app --progress",
+            "@php artisan test"
+        ],
+        "coverage": [
+            "@php artisan test --coverage --coverage-html=storage/coverage-report",
+            "@php -r \"echo 'Coverage report generated at: storage/coverage-report/index.html' . PHP_EOL;\""
         ]
     },
     "extra": {
