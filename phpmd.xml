@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ruleset name="Laravel Rules"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>Custom PHPMD rules for Laravel project</description>
+
+    <!-- Include Clean Code Rules -->
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Exclude rules that don't apply well to Laravel -->
+        <exclude name="StaticAccess" />
+        <exclude name="ElseExpression" />
+    </rule>
+
+    <!-- Include Code Size Rules -->
+    <rule ref="rulesets/codesize.xml" />
+
+    <!-- Include Controversial Rules -->
+    <rule ref="rulesets/controversial.xml">
+        <!-- Allow camelCase method names (Laravel convention) -->
+        <exclude name="CamelCaseMethodName" />
+        <exclude name="CamelCaseParameterName" />
+        <exclude name="CamelCaseVariableName" />
+    </rule>
+
+    <!-- Include Design Rules -->
+    <rule ref="rulesets/design.xml" />
+
+    <!-- Include Naming Rules -->
+    <rule ref="rulesets/naming.xml">
+        <!-- Laravel uses short variable names like $id, $app -->
+        <exclude name="ShortVariable" />
+        <!-- Laravel controllers often have long names -->
+        <exclude name="LongVariable" />
+    </rule>
+
+    <!-- Include Unused Code Rules -->
+    <rule ref="rulesets/unusedcode.xml" />
+
+    <!-- Custom rule adjustments -->
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <properties>
+            <property name="reportLevel" value="15" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/codesize.xml/NPathComplexity">
+        <properties>
+            <property name="minimum" value="500" />
+        </properties>
+    </rule>
+
+</ruleset>

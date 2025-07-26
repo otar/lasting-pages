@@ -77,6 +77,20 @@ php artisan test --coverage
 composer qa
 ```
 
+### Git Hooks
+A pre-commit hook automatically runs `composer qa` before each commit to ensure code quality. The hook will:
+- Run all QA checks (Pint, PHPStan, PHPMD, PHPMND)
+- Prevent commits if any checks fail
+- Show helpful messages for fixing issues
+
+**Installation:**
+```bash
+# Install git hooks (run once after cloning)
+./hooks/install.sh
+```
+
+The hook source is in `hooks/pre-commit` and gets copied to `.git/hooks/pre-commit` when installed.
+
 ### Database
 ```bash
 # Run migrations

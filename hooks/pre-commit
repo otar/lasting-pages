@@ -1,0 +1,22 @@
+#!/bin/sh
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+echo "Running QA checks before commit..."
+
+composer qa
+
+qa_exit_code=$?
+
+if [ $qa_exit_code -ne 0 ]; then
+    echo ""
+    echo "❌ QA checks failed! Commit rejected."
+    echo "Please fix the issues above and try committing again."
+    echo ""
+    echo "To fix formatting issues, run: ./vendor/bin/pint"
+    echo "To run QA checks manually: composer qa"
+    exit 1
+fi
+
+echo "✅ All QA checks passed! Proceeding with commit..."
+exit 0
