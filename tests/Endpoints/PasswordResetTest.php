@@ -26,7 +26,7 @@ test('user can request password reset with valid email', function () {
     ]);
 
     $response->assertRedirect();
-    $response->assertSessionHas('status');
+    $response->assertSessionHas('status', 'If your email is registered, you will be sent a password reset link which is valid for 1 hour.');
 });
 
 test('user cannot request password reset with invalid email', function () {
@@ -45,7 +45,7 @@ test('user cannot request password reset with non-existent email', function () {
     ]);
 
     $response->assertRedirect();
-    $response->assertSessionHasErrors('email');
+    $response->assertSessionHas('status', 'If your email is registered, you will be sent a password reset link which is valid for 1 hour.');
 });
 
 test('reset password page displays correctly with valid token', function () {
@@ -171,4 +171,31 @@ test('password reset token expires and cannot be reused', function () {
 
     $response->assertRedirect();
     $response->assertSessionHasErrors('email');
+});
+
+test('expired token shows expiration message', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create(['email' => 'test@example.com']);
+
+    // Create an expired token by manually inserting it into the database
+    $plainToken = 'expired-token-12345';
+    \Illuminate\Support\Facades\DB::table('password_reset_tokens')->insert([
+        'email' => 'test@example.com',
+        'token' => hash('sha256', $plainToken),
+        'created_at' => now()->subHours(2), // 2 hours ago (expired)
+    ]);
+
+    $response = $this->get("/reset-password/{$plainToken}?email=test@example.com");
+
+    $response->assertStatus(200);
+    $response->assertSee('This password reset link has expired');
+    $response->assertSee('Request a new password reset link');
+});
+
+test('forgot password form pre-fills email from query parameter', function () {
+    /** @var \Tests\TestCase $this */
+    $response = $this->get('/forgot-password?email=test@example.com');
+
+    $response->assertStatus(200);
+    $response->assertSee('value="test@example.com"', false);
 });

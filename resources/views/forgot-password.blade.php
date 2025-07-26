@@ -28,7 +28,7 @@
                                    class="form-control @error('email') is-invalid @enderror" 
                                    id="email" 
                                    name="email" 
-                                   value="{{ old('email') }}" 
+                                   value="{{ old('email', request('email')) }}" 
                                    required 
                                    autofocus>
                             @error('email')
