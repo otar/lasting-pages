@@ -40,6 +40,9 @@
                     </form>
                     
                     <div class="text-center mt-3">
+                        <p class="mb-2">
+                            <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot your password?</a>
+                        </p>
                         <p class="mb-0">
                             Don't have an account? 
                             <a href="{{ route('register') }}" class="text-decoration-none">Register here</a>
