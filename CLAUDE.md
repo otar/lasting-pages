@@ -59,13 +59,22 @@ php artisan test --coverage
 ./vendor/bin/pint --test
 
 # Run PHPStan static analysis (max level)
-./vendor/bin/phpstan analyse
+./vendor/bin/phpstan analyse --memory-limit=256M
 
 # Run PHPStan with verbose output
-./vendor/bin/phpstan analyse --verbose
+./vendor/bin/phpstan analyse --verbose --memory-limit=256M
 
 # Run PHPStan on specific path
-./vendor/bin/phpstan analyse app/
+./vendor/bin/phpstan analyse app/ --memory-limit=256M
+
+# Run PHP Mess Detector
+./vendor/bin/phpmd app text phpmd.xml
+
+# Run PHP Magic Number Detector
+./vendor/bin/phpmnd app --progress
+
+# Run all code quality checks
+composer qa
 ```
 
 ### Database
@@ -117,3 +126,4 @@ php artisan make:model ModelName -mf
 - **Queue**: Laravel Queues
 - **Code Style**: Laravel Pint
 - **Static Analysis**: PHPStan (max level) with Larastan
+- **Code Quality**: PHPMD (PHP Mess Detector), PHPMND (PHP Magic Number Detector)
