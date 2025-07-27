@@ -1,37 +1,43 @@
 /* Sepia Theme - GetPocket.com inspired color scheme */
 
 :root {
-    --sepia-bg: #f7f5f3;
-    --sepia-bg-light: #faf9f7;
-    --sepia-bg-dark: #f0ede8;
+    --sepia-bg: #f8f2e3;
+    --sepia-bg-light: #f8f2e3;
+    --sepia-bg-dark: #f1e8d6;
     --sepia-text: #3a3530;
     --sepia-text-muted: #8b7d6b;
     --sepia-border: #e6e0d6;
     --sepia-accent: #d4b895;
+    --sepia-title: #4d321a;
+    --sepia-primary: #e84847;
+    --sepia-input-bg: #e6e2d7;
+    --sepia-input-text: #b1a08c;
+    --sepia-link: #3379ed;
 }
 
 body {
     background-color: var(--sepia-bg) !important;
     color: var(--sepia-text) !important;
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 
 .card {
-    background-color: var(--sepia-bg-light) !important;
+    background-color: var(--sepia-bg-dark) !important;
     border-color: var(--sepia-border) !important;
     color: var(--sepia-text) !important;
 }
 
 .form-control {
-    background-color: var(--sepia-bg-light) !important;
+    background-color: var(--sepia-input-bg) !important;
     border-color: var(--sepia-border) !important;
-    color: var(--sepia-text) !important;
+    color: var(--sepia-input-text) !important;
 }
 
 .form-control:focus {
-    background-color: var(--sepia-bg-light) !important;
-    border-color: var(--sepia-accent) !important;
-    box-shadow: 0 0 0 0.25rem rgba(212, 184, 149, 0.25) !important;
-    color: var(--sepia-text) !important;
+    background-color: var(--sepia-input-bg) !important;
+    border-color: var(--sepia-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(232, 72, 71, 0.25) !important;
+    color: var(--sepia-input-text) !important;
 }
 
 .form-control::placeholder {
@@ -55,21 +61,49 @@ body {
 }
 
 .btn-primary {
-    background-color: var(--sepia-text) !important;
-    border-color: var(--sepia-text) !important;
-    color: var(--sepia-bg-light) !important;
+    background-color: var(--sepia-primary) !important;
+    border-color: var(--sepia-primary) !important;
+    color: white !important;
 }
 
 .btn-primary:hover {
-    background-color: #2d251f !important;
-    border-color: #2d251f !important;
-    color: var(--sepia-bg-light) !important;
+    background-color: #d73534 !important;
+    border-color: #d73534 !important;
+    color: white !important;
 }
 
 .btn-outline-light:hover {
     background-color: var(--sepia-bg-light) !important;
     border-color: var(--sepia-bg-light) !important;
     color: var(--sepia-text) !important;
+}
+
+/* Title styling */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--sepia-title) !important;
+}
+
+/* Global link styling */
+a {
+    color: var(--sepia-link) !important;
+}
+
+a:hover {
+    color: #2563e3 !important;
+}
+
+/* Logout button styling */
+.btn-outline-light {
+    background-color: transparent !important;
+    border-color: #6c757d !important;
+    color: #6c757d !important;
+}
+
+.btn-outline-light:hover {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
 }
 
 /* Authentication form specific styling */
