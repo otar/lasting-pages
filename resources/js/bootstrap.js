@@ -1,4 +1,2 @@
-import axios from 'axios';
-window.axios = axios;
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// Bootstrap file for global JavaScript setup
+// Currently empty - add global configurations here as needed

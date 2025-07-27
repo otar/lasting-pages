@@ -1,0 +1,83 @@
+/* Sepia Theme - GetPocket.com inspired color scheme */
+
+:root {
+    --sepia-bg: #f7f5f3;
+    --sepia-bg-light: #faf9f7;
+    --sepia-bg-dark: #f0ede8;
+    --sepia-text: #3a3530;
+    --sepia-text-muted: #8b7d6b;
+    --sepia-border: #e6e0d6;
+    --sepia-accent: #d4b895;
+}
+
+body {
+    background-color: var(--sepia-bg) !important;
+    color: var(--sepia-text) !important;
+}
+
+.card {
+    background-color: var(--sepia-bg-light) !important;
+    border-color: var(--sepia-border) !important;
+    color: var(--sepia-text) !important;
+}
+
+.form-control {
+    background-color: var(--sepia-bg-light) !important;
+    border-color: var(--sepia-border) !important;
+    color: var(--sepia-text) !important;
+}
+
+.form-control:focus {
+    background-color: var(--sepia-bg-light) !important;
+    border-color: var(--sepia-accent) !important;
+    box-shadow: 0 0 0 0.25rem rgba(212, 184, 149, 0.25) !important;
+    color: var(--sepia-text) !important;
+}
+
+.form-control::placeholder {
+    color: var(--sepia-text-muted) !important;
+}
+
+.text-muted {
+    color: var(--sepia-text-muted) !important;
+}
+
+.alert-success {
+    background-color: #e8f5e8 !important;
+    border-color: #c3e6c3 !important;
+    color: #2d5a2d !important;
+}
+
+.alert-warning {
+    background-color: #fff3cd !important;
+    border-color: #ffeaa7 !important;
+    color: #856404 !important;
+}
+
+.btn-primary {
+    background-color: var(--sepia-text) !important;
+    border-color: var(--sepia-text) !important;
+    color: var(--sepia-bg-light) !important;
+}
+
+.btn-primary:hover {
+    background-color: #2d251f !important;
+    border-color: #2d251f !important;
+    color: var(--sepia-bg-light) !important;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--sepia-bg-light) !important;
+    border-color: var(--sepia-bg-light) !important;
+    color: var(--sepia-text) !important;
+}
+
+/* Authentication form specific styling */
+.min-vh-100 {
+    background-color: var(--sepia-bg) !important;
+}
+
+/* Override Bootstrap's default background utilities */
+.bg-light {
+    background-color: var(--sepia-bg) !important;
+}

@@ -145,7 +145,8 @@ php artisan make:model ModelName -mf
 
 ## Key Technologies
 - **Backend**: Laravel 12, PHP 8.2+
-- **Frontend**: Vite 7, TailwindCSS 4.0, Axios
+- **Frontend**: Vite 7, Bootstrap 5.3 (local)
+- **UI Theme**: Sepia color scheme (GetPocket.com inspired)
 - **Testing**: Pest PHP, PHPUnit
 - **Database**: SQLite (development)
 - **Queue**: Laravel Queues
