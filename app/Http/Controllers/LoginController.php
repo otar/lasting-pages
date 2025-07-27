@@ -27,13 +27,13 @@ class LoginController
 
         $this->authService->login($request);
 
-        return redirect()->intended('/dashboard');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request): RedirectResponse
     {
         $this->authService->logout($request);
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

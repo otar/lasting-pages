@@ -69,15 +69,15 @@ test('user can reset password with valid token and data', function () {
     $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
-        'password' => 'newpassword123',
-        'password_confirmation' => 'newpassword123',
+        'password' => 'newpassword123456',
+        'password_confirmation' => 'newpassword123456',
     ]);
 
     $response->assertRedirect(route('login'));
     $response->assertSessionHas('status');
 
     $user->refresh();
-    expect(Hash::check('newpassword123', $user->password))->toBeTrue();
+    expect(Hash::check('newpassword123456', $user->password))->toBeTrue();
 });
 
 test('user cannot reset password with invalid token', function () {
@@ -87,8 +87,8 @@ test('user cannot reset password with invalid token', function () {
     $response = $this->post(route('password.update'), [
         'token' => 'invalid-token',
         'email' => 'test@example.com',
-        'password' => 'newpassword123',
-        'password_confirmation' => 'newpassword123',
+        'password' => 'newpassword123456',
+        'password_confirmation' => 'newpassword123456',
     ]);
 
     $response->assertRedirect();
@@ -103,8 +103,8 @@ test('user cannot reset password with invalid email', function () {
     $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'invalid-email',
-        'password' => 'newpassword123',
-        'password_confirmation' => 'newpassword123',
+        'password' => 'newpassword123456',
+        'password_confirmation' => 'newpassword123456',
     ]);
 
     $response->assertSessionHasErrors('email');
@@ -118,8 +118,8 @@ test('user cannot reset password with short password', function () {
     $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
-        'password' => '123',
-        'password_confirmation' => '123',
+        'password' => 'short123',
+        'password_confirmation' => 'short123',
     ]);
 
     $response->assertSessionHasErrors('password');
@@ -133,8 +133,8 @@ test('user cannot reset password with mismatched passwords', function () {
     $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
-        'password' => 'newpassword123',
-        'password_confirmation' => 'different123',
+        'password' => 'newpassword123456',
+        'password_confirmation' => 'different123456',
     ]);
 
     $response->assertSessionHasErrors('password');
@@ -157,16 +157,16 @@ test('password reset token expires and cannot be reused', function () {
     $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
-        'password' => 'newpassword123',
-        'password_confirmation' => 'newpassword123',
+        'password' => 'newpassword123456',
+        'password_confirmation' => 'newpassword123456',
     ]);
 
     // Try to use the same token again
     $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
-        'password' => 'anotherpassword123',
-        'password_confirmation' => 'anotherpassword123',
+        'password' => 'anotherpassword123456',
+        'password_confirmation' => 'anotherpassword123456',
     ]);
 
     $response->assertRedirect();

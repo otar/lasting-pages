@@ -31,11 +31,11 @@ test('user can register with valid data', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('register'), [
         'email' => 'test@example.com',
-        'password' => 'password123',
-        'password_confirmation' => 'password123',
+        'password' => 'password123456',
+        'password_confirmation' => 'password123456',
     ]);
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect('/');
 
     expect(\App\Models\User::where('email', 'test@example.com')->exists())->toBeTrue();
 
@@ -46,8 +46,8 @@ test('user cannot register with invalid email', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('register'), [
         'email' => 'invalid-email',
-        'password' => 'password123',
-        'password_confirmation' => 'password123',
+        'password' => 'password123456',
+        'password_confirmation' => 'password123456',
     ]);
 
     $response->assertSessionHasErrors('email');
@@ -58,8 +58,8 @@ test('user cannot register with short password', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('register'), [
         'email' => 'test@example.com',
-        'password' => '123',
-        'password_confirmation' => '123',
+        'password' => 'short123',
+        'password_confirmation' => 'short123',
     ]);
 
     $response->assertSessionHasErrors('password');
@@ -70,8 +70,8 @@ test('user cannot register with mismatched passwords', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('register'), [
         'email' => 'test@example.com',
-        'password' => 'password123',
-        'password_confirmation' => 'different123',
+        'password' => 'password123456',
+        'password_confirmation' => 'different123456',
     ]);
 
     $response->assertSessionHasErrors('password');
@@ -84,8 +84,8 @@ test('user cannot register with duplicate email', function () {
 
     $response = $this->post(route('register'), [
         'email' => 'test@example.com',
-        'password' => 'password123',
-        'password_confirmation' => 'password123',
+        'password' => 'password123456',
+        'password_confirmation' => 'password123456',
     ]);
 
     $response->assertSessionHasErrors('email');
@@ -96,15 +96,15 @@ test('user can login with valid credentials', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create([
         'email' => 'test@example.com',
-        'password' => Hash::make('password123'),
+        'password' => Hash::make('password123456'),
     ]);
 
     $response = $this->post(route('login'), [
         'email' => 'test@example.com',
-        'password' => 'password123',
+        'password' => 'password123456',
     ]);
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect('/');
     $this->assertAuthenticatedAs($user);
 });
 
@@ -112,7 +112,7 @@ test('user cannot login with invalid credentials', function () {
     /** @var \Tests\TestCase $this */
     User::factory()->create([
         'email' => 'test@example.com',
-        'password' => Hash::make('password123'),
+        'password' => Hash::make('password123456'),
     ]);
 
     $response = $this->post(route('login'), [
@@ -128,7 +128,7 @@ test('user cannot login with non-existent email', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('login'), [
         'email' => 'nonexistent@example.com',
-        'password' => 'password123',
+        'password' => 'password123456',
     ]);
 
     $response->assertSessionHasErrors();
@@ -141,7 +141,7 @@ test('authenticated user can logout', function () {
 
     $response = $this->actingAs($user)->post(route('logout'));
 
-    $response->assertRedirect('/');
+    $response->assertRedirect('/login');
     $this->assertGuest();
 });
 
@@ -149,5 +149,5 @@ test('guest can access logout endpoint', function () {
     /** @var \Tests\TestCase $this */
     $response = $this->post(route('logout'));
 
-    $response->assertRedirect('/');
+    $response->assertRedirect('/login');
 });

@@ -44,7 +44,7 @@ class PasswordResetController
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:12|confirmed',
         ]);
 
         /** @var array<string, string> $resetData */
