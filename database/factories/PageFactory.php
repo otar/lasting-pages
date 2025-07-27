@@ -19,6 +19,7 @@ class PageFactory extends Factory
         return [
             'url' => $this->faker->url(),
             'title' => $this->faker->sentence(3),
+            'is_pending' => false,
         ];
     }
 }

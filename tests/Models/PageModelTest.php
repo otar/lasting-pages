@@ -21,7 +21,7 @@ describe('Page Model', function () {
         $page = new Page;
         $fillable = $page->getFillable();
 
-        $this->assertEquals(['user_id', 'url', 'title'], $fillable);
+        $this->assertEquals(['user_id', 'url', 'title', 'is_pending'], $fillable);
     });
 
     test('page uses soft deletes', function () {

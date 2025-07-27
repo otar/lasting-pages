@@ -16,12 +16,14 @@ class Page extends Model
         'user_id',
         'url',
         'title',
+        'is_pending',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'is_pending' => 'boolean',
     ];
 
     /**
