@@ -20,5 +20,5 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 
 // Protected Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
