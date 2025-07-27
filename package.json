@@ -7,11 +7,16 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@erbelion/vite-plugin-laravel-purgecss": "^0.4.2",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^2.0.0",
+        "postcss": "^8.5.6",
         "vite": "^7.0.4"
     },
     "dependencies": {
         "bootstrap": "^5.3.0"
+    },
+    "volta": {
+        "node": "22.17.1"
     }
 }

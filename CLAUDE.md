@@ -4,7 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Laravel 12 application using modern PHP 8.2+ with Vite for frontend asset building and TailwindCSS 4.0 for styling. The project uses Pest for testing and Laravel Pint for code formatting.
+This is a Laravel 12 application using modern PHP 8.2+ with Vite for frontend asset building and Bootstrap 5.3 for styling. The project uses Pest for testing and Laravel Pint for code formatting.
+
+## Prerequisites
+
+This project uses [Volta](https://volta.sh/) for Node.js version management. Install Volta before running any npm/npx commands:
+
+```bash
+# Install Volta (macOS/Linux)
+curl https://get.volta.sh | bash
+
+# Or install with Homebrew (macOS)
+brew install volta
+```
+
+Volta will automatically use the correct Node.js version (22.17.1) specified in package.json.
 
 ## Development Commands
 
