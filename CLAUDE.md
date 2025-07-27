@@ -152,3 +152,6 @@ php artisan make:model ModelName -mf
 - **Service Layer Guidance**:
   - Never write business logic or use models directly in the controllers
   - Move all business logic to the service layer
+
+## Workflow and Best Practices
+- Always test with `composer qa` before committing code

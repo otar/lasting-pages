@@ -8,7 +8,7 @@ uses(RefreshDatabase::class);
 
 test('login page displays correctly', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/login');
+    $response = $this->get(route('login'));
 
     $response->assertStatus(200);
     $response->assertSee('Login');
@@ -18,7 +18,7 @@ test('login page displays correctly', function () {
 
 test('register page displays correctly', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/register');
+    $response = $this->get(route('register'));
 
     $response->assertStatus(200);
     $response->assertSee('Register');
@@ -29,7 +29,7 @@ test('register page displays correctly', function () {
 
 test('user can register with valid data', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/register', [
+    $response = $this->post(route('register'), [
         'email' => 'test@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -44,7 +44,7 @@ test('user can register with valid data', function () {
 
 test('user cannot register with invalid email', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/register', [
+    $response = $this->post(route('register'), [
         'email' => 'invalid-email',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -56,7 +56,7 @@ test('user cannot register with invalid email', function () {
 
 test('user cannot register with short password', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/register', [
+    $response = $this->post(route('register'), [
         'email' => 'test@example.com',
         'password' => '123',
         'password_confirmation' => '123',
@@ -68,7 +68,7 @@ test('user cannot register with short password', function () {
 
 test('user cannot register with mismatched passwords', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/register', [
+    $response = $this->post(route('register'), [
         'email' => 'test@example.com',
         'password' => 'password123',
         'password_confirmation' => 'different123',
@@ -82,7 +82,7 @@ test('user cannot register with duplicate email', function () {
     /** @var \Tests\TestCase $this */
     User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->post('/register', [
+    $response = $this->post(route('register'), [
         'email' => 'test@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -99,7 +99,7 @@ test('user can login with valid credentials', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = $this->post('/login', [
+    $response = $this->post(route('login'), [
         'email' => 'test@example.com',
         'password' => 'password123',
     ]);
@@ -115,7 +115,7 @@ test('user cannot login with invalid credentials', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = $this->post('/login', [
+    $response = $this->post(route('login'), [
         'email' => 'test@example.com',
         'password' => 'wrongpassword',
     ]);
@@ -126,7 +126,7 @@ test('user cannot login with invalid credentials', function () {
 
 test('user cannot login with non-existent email', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/login', [
+    $response = $this->post(route('login'), [
         'email' => 'nonexistent@example.com',
         'password' => 'password123',
     ]);
@@ -139,7 +139,7 @@ test('authenticated user can logout', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/logout');
+    $response = $this->actingAs($user)->post(route('logout'));
 
     $response->assertRedirect('/');
     $this->assertGuest();
@@ -147,7 +147,7 @@ test('authenticated user can logout', function () {
 
 test('guest can access logout endpoint', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/logout');
+    $response = $this->post(route('logout'));
 
     $response->assertRedirect('/');
 });

@@ -9,7 +9,7 @@ test('authenticated user can access dashboard', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->get('/dashboard');
+    $response = $this->actingAs($user)->get(route('dashboard'));
 
     $response->assertStatus(200);
     $response->assertSee('Dashboard');
@@ -18,9 +18,9 @@ test('authenticated user can access dashboard', function () {
 
 test('guest cannot access dashboard', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/dashboard');
+    $response = $this->get(route('dashboard'));
 
-    $response->assertRedirect('/login');
+    $response->assertRedirect(route('login'));
 });
 
 test('dashboard shows user information', function () {
@@ -30,7 +30,7 @@ test('dashboard shows user information', function () {
         'email' => 'john@example.com',
     ]);
 
-    $response = $this->actingAs($user)->get('/dashboard');
+    $response = $this->actingAs($user)->get(route('dashboard'));
 
     $response->assertStatus(200);
     $response->assertSee('John Doe');
@@ -41,7 +41,7 @@ test('dashboard has logout functionality', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->get('/dashboard');
+    $response = $this->actingAs($user)->get(route('dashboard'));
 
     $response->assertStatus(200);
     $response->assertSee('Logout');

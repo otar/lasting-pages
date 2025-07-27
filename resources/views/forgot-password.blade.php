@@ -19,7 +19,7 @@
                         Enter your email address and we'll send you a link to reset your password.
                     </p>
 
-                    <form method="POST" action="/forgot-password">
+                    <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
                         <div class="mb-3">
@@ -46,7 +46,7 @@
                     </form>
 
                     <div class="text-center mt-3">
-                        <a href="/login" class="text-decoration-none">
+                        <a href="{{ route('login') }}" class="text-decoration-none">
                             Back to Login
                         </a>
                     </div>

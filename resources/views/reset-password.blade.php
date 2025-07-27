@@ -14,14 +14,14 @@
                             <strong>This password reset link has expired.</strong><br>
                             Password reset links are valid for 1 hour for security reasons.
                             @if($recentEmail ?? false)
-                                <a href="/forgot-password?email={{ urlencode($recentEmail) }}" class="alert-link">Request a new password reset link</a> with your email pre-filled.
+                                <a href="{{ route('password.request') }}?email={{ urlencode($recentEmail) }}" class="alert-link">Request a new password reset link</a> with your email pre-filled.
                             @else
-                                Please <a href="/forgot-password" class="alert-link">request a new password reset link</a>.
+                                Please <a href="{{ route('password.request') }}" class="alert-link">request a new password reset link</a>.
                             @endif
                         </div>
                     @endif
 
-                    <form method="POST" action="/reset-password" @if($isExpired ?? false) style="display: none;" @endif>
+                    <form method="POST" action="{{ route('password.update') }}" @if($isExpired ?? false) style="display: none;" @endif>
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -73,7 +73,7 @@
                     </form>
 
                     <div class="text-center mt-3">
-                        <a href="/login" class="text-decoration-none">
+                        <a href="{{ route('login') }}" class="text-decoration-none">
                             Back to Login
                         </a>
                     </div>

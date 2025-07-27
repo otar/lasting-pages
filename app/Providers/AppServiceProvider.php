@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+// use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Configure authentication redirects for new route names
+        // RedirectIfAuthenticated::redirectUsing(fn () => route('dashboard'));
     }
 }

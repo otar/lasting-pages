@@ -9,7 +9,7 @@ uses(RefreshDatabase::class);
 
 test('forgot password page displays correctly', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/forgot-password');
+    $response = $this->get(route('password.request'));
 
     $response->assertStatus(200);
     $response->assertSee('Reset Password');
@@ -21,7 +21,7 @@ test('user can request password reset with valid email', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->post('/forgot-password', [
+    $response = $this->post(route('password.email'), [
         'email' => 'test@example.com',
     ]);
 
@@ -31,7 +31,7 @@ test('user can request password reset with valid email', function () {
 
 test('user cannot request password reset with invalid email', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/forgot-password', [
+    $response = $this->post(route('password.email'), [
         'email' => 'invalid-email',
     ]);
 
@@ -40,7 +40,7 @@ test('user cannot request password reset with invalid email', function () {
 
 test('user cannot request password reset with non-existent email', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->post('/forgot-password', [
+    $response = $this->post(route('password.email'), [
         'email' => 'nonexistent@example.com',
     ]);
 
@@ -53,7 +53,7 @@ test('reset password page displays correctly with valid token', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->get("/reset-password/{$token}?email=test@example.com");
+    $response = $this->get(route('password.reset', $token).'?email=test@example.com');
 
     $response->assertStatus(200);
     $response->assertSee('Reset Password');
@@ -66,14 +66,14 @@ test('user can reset password with valid token and data', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'newpassword123',
         'password_confirmation' => 'newpassword123',
     ]);
 
-    $response->assertRedirect('/login');
+    $response->assertRedirect(route('login'));
     $response->assertSessionHas('status');
 
     $user->refresh();
@@ -84,7 +84,7 @@ test('user cannot reset password with invalid token', function () {
     /** @var \Tests\TestCase $this */
     $user = User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => 'invalid-token',
         'email' => 'test@example.com',
         'password' => 'newpassword123',
@@ -100,7 +100,7 @@ test('user cannot reset password with invalid email', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'invalid-email',
         'password' => 'newpassword123',
@@ -115,7 +115,7 @@ test('user cannot reset password with short password', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => '123',
@@ -130,7 +130,7 @@ test('user cannot reset password with mismatched passwords', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'newpassword123',
@@ -142,7 +142,7 @@ test('user cannot reset password with mismatched passwords', function () {
 
 test('login form has forgot password link', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/login');
+    $response = $this->get(route('login'));
 
     $response->assertStatus(200);
     $response->assertSee('Forgot your password?');
@@ -154,7 +154,7 @@ test('password reset token expires and cannot be reused', function () {
     $token = Password::createToken($user);
 
     // Use the token once
-    $this->post('/reset-password', [
+    $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'newpassword123',
@@ -162,7 +162,7 @@ test('password reset token expires and cannot be reused', function () {
     ]);
 
     // Try to use the same token again
-    $response = $this->post('/reset-password', [
+    $response = $this->post(route('password.update'), [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'anotherpassword123',
@@ -185,7 +185,7 @@ test('expired token shows expiration message', function () {
         'created_at' => now()->subHours(2), // 2 hours ago (expired)
     ]);
 
-    $response = $this->get("/reset-password/{$plainToken}?email=test@example.com");
+    $response = $this->get(route('password.reset', $plainToken).'?email=test@example.com');
 
     $response->assertStatus(200);
     $response->assertSee('This password reset link has expired');
@@ -194,7 +194,7 @@ test('expired token shows expiration message', function () {
 
 test('forgot password form pre-fills email from query parameter', function () {
     /** @var \Tests\TestCase $this */
-    $response = $this->get('/forgot-password?email=test@example.com');
+    $response = $this->get(route('password.request').'?email=test@example.com');
 
     $response->assertStatus(200);
     $response->assertSee('value="test@example.com"', false);

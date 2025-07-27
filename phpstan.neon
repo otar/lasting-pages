@@ -7,7 +7,6 @@ parameters:
         - app/
         - config/
         - database/
-        - routes/
         - tests/
     
     # Exclude vendor and generated files
