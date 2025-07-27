@@ -38,17 +38,23 @@ php artisan pail
 
 ### Testing
 ```bash
-# Run all tests
+# Run all tests (parallel execution - ~29% faster)
 composer test
-# or
-php artisan test
+
+# Run tests with Pest directly (parallel execution)
+./vendor/bin/pest --parallel
 
 # Run specific test file
-php artisan test tests/Feature/ExampleTest.php
+./vendor/bin/pest tests/Endpoints/AuthenticationTest.php
 
-# Run tests with coverage
-php artisan test --coverage
+# Run tests with coverage (parallel execution)
+./vendor/bin/pest --parallel --coverage
+
+# Run tests without parallel execution (slower)
+php artisan test
 ```
+
+**Performance**: Tests run in parallel using 8 processes with in-memory SQLite database for maximum speed.
 
 ### Code Quality
 ```bash
