@@ -27,12 +27,12 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
                             <input type="email" 
                                    class="form-control @error('email') is-invalid @enderror" 
                                    id="email" 
                                    name="email" 
                                    value="{{ $email ?? old('email') }}" 
+                                   placeholder="Email Address"
                                    required 
                                    autofocus>
                             @error('email')
@@ -43,11 +43,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">New Password</label>
                             <input type="password" 
                                    class="form-control @error('password') is-invalid @enderror" 
                                    id="password" 
                                    name="password" 
+                                   placeholder="New Password"
                                    required>
                             @error('password')
                                 <div class="invalid-feedback">
@@ -57,11 +57,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Confirm New Password</label>
                             <input type="password" 
                                    class="form-control" 
                                    id="password_confirmation" 
                                    name="password_confirmation" 
+                                   placeholder="Confirm New Password"
                                    required>
                         </div>
 
