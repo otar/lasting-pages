@@ -13,7 +13,6 @@ describe('Page Store Endpoint', function () {
 
         $pageData = [
             'url' => 'https://example.com',
-            'title' => 'Example Title',
         ];
 
         $response = $this->actingAs($user)->post(route('pages.store'), $pageData);
@@ -24,7 +23,7 @@ describe('Page Store Endpoint', function () {
         $this->assertDatabaseHas('pages', [
             'user_id' => $user->id,
             'url' => 'https://example.com',
-            'title' => 'Example Title',
+            'title' => null,
         ]);
     });
 
@@ -118,25 +117,10 @@ describe('Page Store Endpoint', function () {
         $response->assertSessionHasErrors(['url']);
     });
 
-    test('page creation fails with title too long', function () {
-        /** @var \Tests\TestCase $this */
-        $user = User::factory()->create();
-
-        $pageData = [
-            'url' => 'https://example.com',
-            'title' => str_repeat('a', 251),
-        ];
-
-        $response = $this->actingAs($user)->post(route('pages.store'), $pageData);
-
-        $response->assertSessionHasErrors(['title']);
-    });
-
     test('guest cannot create a page', function () {
         /** @var \Tests\TestCase $this */
         $pageData = [
             'url' => 'https://example.com',
-            'title' => 'Example Title',
         ];
 
         $response = $this->post(route('pages.store'), $pageData);
@@ -162,7 +146,6 @@ describe('Page Store Endpoint', function () {
 
         $pageData = [
             'url' => 'https://example.com',
-            'title' => 'Example Title',
         ];
 
         $response = $this->actingAs($user)->post(route('pages.store'), $pageData);

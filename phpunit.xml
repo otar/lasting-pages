@@ -5,8 +5,11 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Endpoints">
+        <testsuite name="Functional">
             <directory>tests/Endpoints</directory>
+            <directory>tests/Models</directory>
+            <directory>tests/Policies</directory>
+            <directory>tests/Services</directory>
         </testsuite>
     </testsuites>
     <source>
