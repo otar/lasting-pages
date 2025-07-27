@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Lasting Pages')</title>
+    <title>
+        @hasSection('title')
+            @yield('title') &middot; Lasting Pages
+        @else
+            Lasting Pages
+        @endif
+    </title>
     @vite(['resources/css/app.css'])
 </head>
 <body>
