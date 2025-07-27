@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,7 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 // Protected Routes
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
+    Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 });

@@ -23,18 +23,27 @@ test('guest cannot access dashboard', function () {
     $response->assertRedirect(route('login'));
 });
 
-test('dashboard shows user information', function () {
+test('dashboard shows add page form', function () {
     /** @var \Tests\TestCase $this */
-    $user = User::factory()->create([
-        'name' => 'John Doe',
-        'email' => 'john@example.com',
-    ]);
+    $user = User::factory()->create();
 
     $response = $this->actingAs($user)->get(route('dashboard'));
 
     $response->assertStatus(200);
-    $response->assertSee('John Doe');
-    $response->assertSee('john@example.com');
+    $response->assertSee('Add New Page');
+    $response->assertSee('Save a URL to read later');
+    $response->assertSee('Save Page');
+});
+
+test('dashboard shows saved pages section', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get(route('dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertSee('My Saved Pages');
+    $response->assertSee('No pages saved yet');
 });
 
 test('dashboard has logout functionality', function () {

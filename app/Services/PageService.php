@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Page;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+
+class PageService
+{
+    /**
+     * @param  array{url: string, title?: string|null}  $data
+     */
+    public function createPage(array $data): Page
+    {
+        $normalizedUrl = $this->normalizeUrl($data['url']);
+
+        $this->validateUniqueUrl($normalizedUrl, (int) Auth::id());
+
+        return Page::create([
+            'user_id' => Auth::id(),
+            'url' => $normalizedUrl,
+            'title' => $data['title'] ?? null,
+        ]);
+    }
+
+    public function deletePage(Page $page): ?bool
+    {
+        return $page->delete();
+    }
+
+    /**
+     * @return Collection<int, Page>
+     */
+    public function getUserPages(int $userId): Collection
+    {
+        return Page::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    private function normalizeUrl(string $url): string
+    {
+        $url = trim($url);
+
+        if (! preg_match('/^https?:\/\//', $url)) {
+            $url = 'https://'.$url;
+        }
+
+        $url = rtrim($url, '/');
+
+        $parsedUrl = parse_url($url);
+        if (! $parsedUrl || ! isset($parsedUrl['host'])) {
+            throw ValidationException::withMessages([
+                'url' => 'The URL format is invalid.',
+            ]);
+        }
+
+        return $url;
+    }
+
+    private function validateUniqueUrl(string $url, int $userId): void
+    {
+        $exists = Page::where('user_id', $userId)
+            ->where('url', $url)
+            ->exists();
+
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'url' => 'You have already saved this URL.',
+            ]);
+        }
+    }
+}

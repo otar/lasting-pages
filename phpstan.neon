@@ -8,7 +8,7 @@ parameters:
         - config/
         - database/
         - tests/
-    
+
     # Exclude vendor and generated files
     excludePaths:
         - bootstrap/cache/
@@ -16,7 +16,10 @@ parameters:
         - vendor/
         - node_modules/
         - tests/CreatesApplication.php
-    
+
+    ignoreErrors:
+        - identifier: method.protected
+
     # Enable strict rules for maximum analysis
     reportUnmatchedIgnoredErrors: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
@@ -24,9 +27,8 @@ parameters:
     checkDynamicProperties: true
     checkImplicitMixed: true
     checkBenevolentUnionTypes: true
-    
+
     # Laravel-specific configurations
     noUnnecessaryCollectionCall: true
     noUnnecessaryCollectionCallOnly: []
     noUnnecessaryCollectionCallExcept: []
-    

@@ -176,3 +176,12 @@ php artisan make:model ModelName -mf
 
 ## Workflow and Best Practices
 - Always test with `composer qa` before committing code
+
+## Development Principles
+
+- Always use soft deletes for the models if not told otherwise
+
+## Development Guidance
+
+- Don't use model scopes if not told otherwise
+- Dont use controller resources, directly create methods
