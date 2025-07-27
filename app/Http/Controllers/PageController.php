@@ -20,13 +20,12 @@ class PageController
     {
         $request->validate([
             'url' => 'required|url|max:2000',
-            'title' => 'nullable|string|max:250',
         ]);
 
         try {
             $this->pageService->createPage([
                 'url' => $request->string('url')->toString(),
-                'title' => $request->string('title', '')->value() ?: null,
+                'title' => null,
             ]);
 
             return redirect()->route('dashboard')

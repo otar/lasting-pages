@@ -31,8 +31,8 @@ test('dashboard shows add page form', function () {
 
     $response->assertStatus(200);
     $response->assertSee('Add New Page');
-    $response->assertSee('Save a URL to read later');
     $response->assertSee('Save Page');
+    $response->assertSee('Enter URL (https://example.com)');
 });
 
 test('dashboard shows saved pages section', function () {
