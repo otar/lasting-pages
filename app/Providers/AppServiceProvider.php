@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-// use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use App\View\Composers\UserComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,5 +17,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Configure authentication redirects for new route names
         // RedirectIfAuthenticated::redirectUsing(fn () => route('dashboard'));
+
+        // Register view composers
+        View::composer('layouts.main', UserComposer::class);
     }
 }

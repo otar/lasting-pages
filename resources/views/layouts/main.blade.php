@@ -18,7 +18,14 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ route('dashboard') }}">Lasting Pages</a>
                 <div class="navbar-nav ms-auto">
-                    <span class="navbar-text me-3">Welcome, {{ auth()->user()->name }}!</span>
+                    <div class="d-flex align-items-center me-3">
+                        <img src="{{ $userAvatar }}"
+                             alt="User Avatar"
+                             class="rounded-circle border object-fit-cover me-2"
+                             width="32"
+                             height="32">
+                        <span class="navbar-text">{{ $userEmail }}</span>
+                    </div>
                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>

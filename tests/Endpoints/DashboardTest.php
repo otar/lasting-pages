@@ -13,7 +13,7 @@ test('authenticated user can access dashboard', function () {
 
     $response->assertStatus(200);
     $response->assertSee('Dashboard');
-    $response->assertSee($user->name);
+    $response->assertSee($user->email);
 });
 
 test('guest cannot access dashboard', function () {
