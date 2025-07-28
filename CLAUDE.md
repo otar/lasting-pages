@@ -185,3 +185,4 @@ php artisan make:model ModelName -mf
 
 - Don't use model scopes if not told otherwise
 - Dont use controller resources, directly create methods
+- Never, ever write PHP code in the views. Pass data from the controller to the views and use it. Views are only for rendering, not writing any kind of logic.

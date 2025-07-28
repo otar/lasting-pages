@@ -9,19 +9,17 @@ use Illuminate\Validation\ValidationException;
 
 class PageService
 {
-    /**
-     * @param  array{url: string, title?: string|null}  $data
-     */
-    public function createPage(array $data): Page
+    public function createPage(string $url, ?string $title = null): Page
     {
-        $normalizedUrl = $this->normalizeUrl($data['url']);
+        $normalizedUrl = $this->normalizeUrl($url);
 
         $this->validateUniqueUrl($normalizedUrl, (int) Auth::id());
 
         return Page::create([
             'user_id' => Auth::id(),
             'url' => $normalizedUrl,
-            'title' => $data['title'] ?? null,
+            'title' => $title,
+            'is_pending' => true,
         ]);
     }
 

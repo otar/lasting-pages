@@ -63,14 +63,16 @@ class PasswordResetService
         ];
     }
 
-    /**
-     * @param  array<string, string>  $validatedData
-     */
-    public function resetPassword(array $validatedData): string
+    public function resetPassword(string $email, string $password, string $passwordConfirmation, string $token): string
     {
         /** @var string $status */
         $status = Password::reset(
-            $validatedData,
+            [
+                'email' => $email,
+                'password' => $password,
+                'password_confirmation' => $passwordConfirmation,
+                'token' => $token,
+            ],
             function (\App\Models\User $user, string $password): void {
                 $user->password = bcrypt($password);
                 $user->save();

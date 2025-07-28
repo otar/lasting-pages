@@ -1,2 +1,10 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import './sepia-theme.css';
+
+a.card-main-link {
+    text-decoration: none;
+}
+
+a.card-main-link:hover .card {
+    border-color: maroon !important;
+}

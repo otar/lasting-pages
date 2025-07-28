@@ -23,10 +23,9 @@ class PageController
         ]);
 
         try {
-            $this->pageService->createPage([
-                'url' => $request->string('url')->toString(),
-                'title' => null,
-            ]);
+            $this->pageService->createPage(
+                url: $request->string('url')->toString()
+            );
 
             return redirect()->route('dashboard')
                 ->with('success', 'Page saved successfully!');

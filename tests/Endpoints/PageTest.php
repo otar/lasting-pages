@@ -160,6 +160,7 @@ describe('Page Destroy Endpoint', function () {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create();
         $page = Page::factory()->create(['user_id' => $user->id]);
+        $page->refresh(); // Refresh to get the encoded_id
 
         $response = $this->actingAs($user)->delete(route('pages.destroy', $page));
 
@@ -176,6 +177,7 @@ describe('Page Destroy Endpoint', function () {
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
         $page = Page::factory()->create(['user_id' => $otherUser->id]);
+        $page->refresh(); // Refresh to get the encoded_id
 
         $response = $this->actingAs($user)->delete(route('pages.destroy', $page));
 
@@ -190,6 +192,7 @@ describe('Page Destroy Endpoint', function () {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create();
         $page = Page::factory()->create(['user_id' => $user->id]);
+        $page->refresh(); // Refresh to get the encoded_id
 
         $response = $this->delete(route('pages.destroy', $page));
 

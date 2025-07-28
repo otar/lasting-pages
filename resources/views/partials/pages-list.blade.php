@@ -6,38 +6,30 @@
             <div class="row">
                 @foreach($pages as $page)
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body d-flex flex-column">
-                                <h6 class="card-title">
-                                    @if($page->title)
-                                        {{ Str::limit($page->title, 50) }}
-                                    @else
-                                        <span class="text-muted">Untitled</span>
-                                    @endif
-                                </h6>
-                                <p class="card-text small">
-                                    <span class="text-muted">{{ Str::limit($page->url, 60) }}</span>
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">{{ $page->created_at->diffForHumans() }}</small>
-                                </p>
-                                <div class="mt-auto">
-                                    <div class="btn-group w-100" role="group">
-                                        <a href="{{ $page->url }}" target="_blank" class="btn btn-outline-primary btn-sm">
-                                            Visit
-                                        </a>
-                                        <form method="POST" action="{{ route('pages.destroy', $page) }}" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger btn-sm"
-                                                    onclick="return confirm('Delete this page?')">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </div>
+                        <a href="#" class="card-main-link">
+                            <div class="card h-100 position-relative">
+                                @if($page->is_pending)
+                                    <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-bg-warning">
+                                    Pending
+                                </span>
+                                @endif
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="card-title">
+                                        @if($page->title)
+                                            {{ Str::limit($page->title, 50) }}
+                                        @endif
+                                    </h6>
+                                    <p class="card-text small">
+                                        <span class="text-muted">{{ Str::limit($page->url, 60) }}</span>
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <abbr title="{{ $page->created_at->format('Y-m-d H:i') }}">{{ $page->created_at->diffForHumans() }}</abbr>
+                                        </small>
+                                    </p>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>

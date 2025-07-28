@@ -20,13 +20,15 @@ class RegisterController
 
     public function register(Request $request): RedirectResponse
     {
-        /** @var array<string, string> $validated */
-        $validated = $request->validate([
+        $request->validate([
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:12|confirmed',
         ]);
 
-        $this->authService->register($validated);
+        $this->authService->register(
+            email: $request->string('email')->toString(),
+            password: $request->string('password')->toString()
+        );
 
         return redirect()->route('dashboard');
     }

@@ -24,14 +24,8 @@ class AuthService
         $request->session()->regenerate();
     }
 
-    /**
-     * @param  array<string, string>  $validatedData
-     */
-    public function register(array $validatedData): User
+    public function register(string $email, string $password): User
     {
-        $email = (string) $validatedData['email'];
-        $password = (string) $validatedData['password'];
-
         $user = User::create([
             'name' => explode('@', $email)[0],
             'email' => $email,

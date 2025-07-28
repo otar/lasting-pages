@@ -47,9 +47,12 @@ class PasswordResetController
             'password' => 'required|min:12|confirmed',
         ]);
 
-        /** @var array<string, string> $resetData */
-        $resetData = $request->only('email', 'password', 'password_confirmation', 'token');
-        $status = $this->passwordResetService->resetPassword($resetData);
+        $status = $this->passwordResetService->resetPassword(
+            email: $request->string('email')->toString(),
+            password: $request->string('password')->toString(),
+            passwordConfirmation: $request->string('password_confirmation')->toString(),
+            token: $request->string('token')->toString()
+        );
 
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))

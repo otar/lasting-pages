@@ -16,15 +16,16 @@ describe('Page Service', function () {
         Auth::login($user);
 
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => 'https://example.com',
-            'title' => 'Example Title',
-        ]);
+        $page = $service->createPage(
+            url: 'https://example.com',
+            title: 'Example Title'
+        );
 
         $this->assertInstanceOf(Page::class, $page);
         $this->assertEquals($user->id, $page->user_id);
         $this->assertEquals('https://example.com', $page->url);
         $this->assertEquals('Example Title', $page->title);
+        $this->assertTrue($page->is_pending);
     });
 
     test('creates page without title', function () {
@@ -33,9 +34,9 @@ describe('Page Service', function () {
         Auth::login($user);
 
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => 'https://example.com',
-        ]);
+        $page = $service->createPage(
+            url: 'https://example.com'
+        );
 
         $this->assertInstanceOf(Page::class, $page);
         $this->assertNull($page->title);
@@ -47,10 +48,10 @@ describe('Page Service', function () {
         Auth::login($user);
 
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => 'example.com',
-            'title' => 'Example',
-        ]);
+        $page = $service->createPage(
+            url: 'example.com',
+            title: 'Example'
+        );
 
         $this->assertEquals('https://example.com', $page->url);
     });
@@ -61,10 +62,10 @@ describe('Page Service', function () {
         Auth::login($user);
 
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => 'https://example.com/',
-            'title' => 'Example',
-        ]);
+        $page = $service->createPage(
+            url: 'https://example.com/',
+            title: 'Example'
+        );
 
         $this->assertEquals('https://example.com', $page->url);
     });
@@ -75,10 +76,10 @@ describe('Page Service', function () {
         Auth::login($user);
 
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => '  https://example.com/path  ',
-            'title' => 'Example',
-        ]);
+        $page = $service->createPage(
+            url: '  https://example.com/path  ',
+            title: 'Example'
+        );
 
         $this->assertEquals('https://example.com/path', $page->url);
     });
@@ -94,10 +95,10 @@ describe('Page Service', function () {
         $this->expectExceptionMessage('The URL format is invalid.');
 
         // This URL will cause parse_url to return false
-        $service->createPage([
-            'url' => 'http://',
-            'title' => 'Example',
-        ]);
+        $service->createPage(
+            url: 'http://',
+            title: 'Example'
+        );
     });
 
     test('throws exception for duplicate url', function () {
@@ -116,10 +117,10 @@ describe('Page Service', function () {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('You have already saved this URL.');
 
-        $service->createPage([
-            'url' => 'https://example.com',
-            'title' => 'Duplicate',
-        ]);
+        $service->createPage(
+            url: 'https://example.com',
+            title: 'Duplicate'
+        );
     });
 
     test('allows same url for different users', function () {
@@ -136,10 +137,10 @@ describe('Page Service', function () {
         // Should allow user2 to create same url
         Auth::login($user2);
         $service = new PageService;
-        $page = $service->createPage([
-            'url' => 'https://example.com',
-            'title' => 'Same URL',
-        ]);
+        $page = $service->createPage(
+            url: 'https://example.com',
+            title: 'Same URL'
+        );
 
         $this->assertEquals($user2->id, $page->user_id);
         $this->assertEquals('https://example.com', $page->url);
