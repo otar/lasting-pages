@@ -17,7 +17,7 @@ class PageFactory extends Factory
     public function definition(): array
     {
         return [
-            'url' => $this->faker->url(),
+            'url' => $this->faker->unique()->url(),
             'title' => $this->faker->sentence(3),
             'is_pending' => false,
         ];

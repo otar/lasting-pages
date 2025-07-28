@@ -10,8 +10,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory(count: 10)
-            ->has(Page::factory(count: 5))
+        User::factory(count: 5)
+            ->has(Page::factory(count: 10))
             ->create();
     }
 }

@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('pages', function (Blueprint $table) {
@@ -22,13 +19,5 @@ return new class extends Migration
             $table->index(['user_id', 'created_at']);
             $table->unique(['user_id', 'url'], 'user_url_unique');
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('pages');
     }
 };
