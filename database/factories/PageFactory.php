@@ -16,10 +16,12 @@ class PageFactory extends Factory
      */
     public function definition(): array
     {
+        $isPending = $this->faker->boolean();
+
         return [
             'url' => $this->faker->unique()->url(),
-            'title' => $this->faker->sentence(3),
-            'is_pending' => $this->faker->boolean(),
+            'title' => $isPending ? null : $this->faker->sentence(3),
+            'is_pending' => $isPending,
         ];
     }
 }

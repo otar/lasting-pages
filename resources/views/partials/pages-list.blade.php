@@ -7,20 +7,20 @@
                 @foreach($pages as $page)
                     <div class="col-md-6 col-lg-4 mb-4">
                         <a href="#" class="card-main-link">
-                            <div class="card h-100 position-relative">
+                            <div class="card h-100 position-relative @if($page->is_pending) is-pending @endif">
                                 @if($page->is_pending)
                                     <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-bg-warning">
-                                    Pending
-                                </span>
+                                        <div class="spinner-border spinner-border-sm" role="status" style="width: 0.75rem; height: 0.75rem;"></div> Fetching...
+                                    </span>
                                 @endif
                                 <div class="card-body d-flex flex-column">
                                     <h6 class="card-title">
                                         @if($page->title)
-                                            {{ Str::limit($page->title, 50) }}
+                                            {{ Str::limit($page->title, 40) }}
                                         @endif
                                     </h6>
                                     <p class="card-text small">
-                                        <span class="text-muted">{{ Str::limit($page->url, 60) }}</span>
+                                        <span class="text-muted">{{ Str::limit($page->url, 40) }}</span>
                                     </p>
                                     <p class="card-text">
                                         <small class="text-muted">
