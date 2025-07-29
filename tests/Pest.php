@@ -12,8 +12,16 @@
 */
 
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Endpoints', 'Models', 'Policies', 'Services', 'Traits');
+    // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in(
+        'Endpoints',
+        'Models',
+        'Policies',
+        'Services',
+        'Traits',
+        'Jobs',
+        'Observers',
+    );
 
 /*
 |--------------------------------------------------------------------------

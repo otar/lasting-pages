@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'cf-browser-rendering' => [
+        'api_url' => env('CF_BROWSER_RENDERING_API_URL'),
+        'api_token' => env('CF_BROWSER_RENDERING_API_TOKEN'),
+        'api_connection_timeout' => env('CF_BROWSER_RENDERING_API_CONNECTION_TIMEOUT'),
+        'api_request_timeout' => env('CF_BROWSER_RENDERING_API_REQUEST_TIMEOUT'),
+    ],
+
 ];

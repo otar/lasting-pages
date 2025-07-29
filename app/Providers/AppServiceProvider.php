@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
+use App\Observers\PageObserver;
 use App\View\Composers\UserComposer;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -21,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFive();
         View::composer('layouts.main', UserComposer::class);
+
+        // Register model observers
+        Page::observe(PageObserver::class);
     }
 }
