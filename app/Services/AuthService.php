@@ -3,17 +3,22 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function login(Request $request): void
+    /**
+     * @SuppressWarnings("BooleanArgumentFlag")
+     */
+    public function login(string $email, string $password, bool $remember = false): void
     {
-        $credentials = $request->only('email', 'password');
-        $remember = $request->boolean('remember');
+        $credentials = [
+            'email' => $email,
+            'password' => $password,
+        ];
 
         if (! Auth::attempt($credentials, $remember)) {
             throw ValidationException::withMessages([
@@ -21,7 +26,7 @@ class AuthService
             ]);
         }
 
-        $request->session()->regenerate();
+        Session::regenerate();
     }
 
     public function register(string $email, string $password): User
@@ -37,11 +42,11 @@ class AuthService
         return $user;
     }
 
-    public function logout(Request $request): void
+    public function logout(): void
     {
         Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        Session::invalidate();
+        Session::regenerateToken();
     }
 }

@@ -19,7 +19,7 @@ class PageFactory extends Factory
         return [
             'url' => $this->faker->unique()->url(),
             'title' => $this->faker->sentence(3),
-            'is_pending' => false,
+            'is_pending' => $this->faker->boolean(),
         ];
     }
 }

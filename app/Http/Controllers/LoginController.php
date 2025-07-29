@@ -25,14 +25,18 @@ class LoginController
             'password' => 'required',
         ]);
 
-        $this->authService->login($request);
+        $this->authService->login(
+            email: $request->string('email')->toString(),
+            password: $request->string('password')->toString(),
+            remember: $request->boolean('remember')
+        );
 
         return redirect()->route('dashboard');
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(): RedirectResponse
     {
-        $this->authService->logout($request);
+        $this->authService->logout();
 
         return redirect()->route('login');
     }
