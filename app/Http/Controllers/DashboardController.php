@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\PageService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class DashboardController
 {
@@ -11,10 +12,11 @@ class DashboardController
         private PageService $pageService
     ) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $pages = $this->pageService->getUserPages((int) auth()->id());
+        $sortOrder = $request->string('sort', 'desc')->toString();
+        $pages = $this->pageService->getUserPages((int) auth()->id(), $sortOrder);
 
-        return view('dashboard', compact('pages'));
+        return view('dashboard', compact('pages', 'sortOrder'));
     }
 }

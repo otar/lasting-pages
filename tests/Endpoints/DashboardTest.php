@@ -55,3 +55,53 @@ test('dashboard has logout functionality', function () {
     $response->assertStatus(200);
     $response->assertSee('Logout');
 });
+
+test('dashboard shows sorting options when pages exist', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create();
+    $user->pages()->createMany([
+        ['url' => 'https://example1.com', 'title' => 'Example 1'],
+        ['url' => 'https://example2.com', 'title' => 'Example 2'],
+    ]);
+
+    $response = $this->actingAs($user)->get(route('dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertSee('Newest First');
+    $response->assertSee('Oldest First');
+});
+
+test('dashboard does not show sorting options when no pages exist', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get(route('dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertDontSee('Newest First');
+    $response->assertDontSee('Oldest First');
+});
+
+test('dashboard applies desc sort by default', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create();
+    $oldPage = $user->pages()->create(['url' => 'https://old.com', 'title' => 'Old Page', 'created_at' => now()->subDays(2)]);
+    $newPage = $user->pages()->create(['url' => 'https://new.com', 'title' => 'New Page', 'created_at' => now()]);
+
+    $response = $this->actingAs($user)->get(route('dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertSeeInOrder(['New Page', 'Old Page']);
+});
+
+test('dashboard applies asc sort when requested', function () {
+    /** @var \Tests\TestCase $this */
+    $user = User::factory()->create();
+    $oldPage = $user->pages()->create(['url' => 'https://old.com', 'title' => 'Old Page', 'created_at' => now()->subDays(2)]);
+    $newPage = $user->pages()->create(['url' => 'https://new.com', 'title' => 'New Page', 'created_at' => now()]);
+
+    $response = $this->actingAs($user)->get(route('dashboard', ['sort' => 'asc']));
+
+    $response->assertStatus(200);
+    $response->assertSeeInOrder(['Old Page', 'New Page']);
+});

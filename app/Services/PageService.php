@@ -31,10 +31,13 @@ class PageService
     /**
      * @return Collection<int, Page>
      */
-    public function getUserPages(int $userId): Collection
+    public function getUserPages(int $userId, string $sortOrder = 'desc'): Collection
     {
+        // Validate sort order
+        $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
+
         return Page::where('user_id', $userId)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', $sortOrder)
             ->get();
     }
 

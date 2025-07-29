@@ -1,6 +1,25 @@
 <div class="row">
     <div class="col-12">
-        <h4 class="mb-3">My Saved Pages ({{ $pages->count() }})</h4>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">My Saved Pages ({{ $pages->count() }})</h4>
+            
+            @if($pages->count() > 0)
+                <div class="text-muted small">
+                    Sort: 
+                    @if($sortOrder === 'desc')
+                        <strong>Newest First</strong>
+                    @else
+                        <a href="{{ route('dashboard', ['sort' => 'desc']) }}" class="text-decoration-none">Newest First</a>
+                    @endif
+                    |
+                    @if($sortOrder === 'asc')
+                        <strong>Oldest First</strong>
+                    @else
+                        <a href="{{ route('dashboard', ['sort' => 'asc']) }}" class="text-decoration-none">Oldest First</a>
+                    @endif
+                </div>
+            @endif
+        </div>
 
         @if($pages->count() > 0)
             <div class="row">
@@ -14,11 +33,11 @@
                                     </span>
                                 @endif
                                 <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title">
-                                        @if($page->title)
+                                    @if($page->title)
+                                        <h6 class="card-title">
                                             {{ Str::limit($page->title, 40) }}
-                                        @endif
-                                    </h6>
+                                        </h6>
+                                    @endif
                                     <p class="card-text small">
                                         <span class="text-muted">{{ Str::limit($page->url, 40) }}</span>
                                     </p>

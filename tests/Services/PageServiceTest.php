@@ -203,4 +203,63 @@ describe('Page Service', function () {
         $this->assertCount(2, $user1Pages);
         $this->assertCount(1, $user2Pages);
     });
+
+    test('gets user pages in ascending order when requested', function () {
+        /** @var \Tests\TestCase $this */
+        $user = User::factory()->create();
+
+        // Create pages with different timestamps
+        $oldPage = Page::factory()->create([
+            'user_id' => $user->id,
+            'created_at' => now()->subDays(2),
+        ]);
+        $newPage = Page::factory()->create([
+            'user_id' => $user->id,
+            'created_at' => now(),
+        ]);
+
+        $service = new PageService;
+        $pages = $service->getUserPages($user->id, 'asc');
+
+        $this->assertCount(2, $pages);
+
+        $firstPage = $pages->first();
+        $lastPage = $pages->last();
+
+        $this->assertNotNull($firstPage);
+        $this->assertNotNull($lastPage);
+
+        $this->assertEquals($oldPage->id, $firstPage->id);
+        $this->assertEquals($newPage->id, $lastPage->id);
+    });
+
+    test('defaults to desc order for invalid sort parameter', function () {
+        /** @var \Tests\TestCase $this */
+        $user = User::factory()->create();
+
+        // Create pages with different timestamps
+        $oldPage = Page::factory()->create([
+            'user_id' => $user->id,
+            'created_at' => now()->subDays(2),
+        ]);
+        $newPage = Page::factory()->create([
+            'user_id' => $user->id,
+            'created_at' => now(),
+        ]);
+
+        $service = new PageService;
+        $pages = $service->getUserPages($user->id, 'invalid');
+
+        $this->assertCount(2, $pages);
+
+        $firstPage = $pages->first();
+        $lastPage = $pages->last();
+
+        $this->assertNotNull($firstPage);
+        $this->assertNotNull($lastPage);
+
+        // Should default to desc order
+        $this->assertEquals($newPage->id, $firstPage->id);
+        $this->assertEquals($oldPage->id, $lastPage->id);
+    });
 });
