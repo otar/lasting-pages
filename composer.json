@@ -65,10 +65,10 @@
             "@php ./vendor/bin/pest --parallel"
         ],
         "qa": [
-            "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/pint --test",
-            "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpstan analyse --memory-limit=1G",
-            "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmd app text phpmd.xml",
-            "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmnd app --progress",
+            "XDEBUG_MODE=off php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/pint --test",
+            "XDEBUG_MODE=off php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpstan analyse --memory-limit=1G",
+            "XDEBUG_MODE=off php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmd app text phpmd.xml",
+            "XDEBUG_MODE=off php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/phpmnd app --progress",
             "php -d error_reporting='E_ALL & ~E_DEPRECATED' ./vendor/bin/pest --parallel --coverage --min=100"
         ],
         "coverage": [
