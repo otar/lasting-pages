@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Page;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator as ConcretePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -29,16 +29,20 @@ class PageService
     }
 
     /**
-     * @return Collection<int, Page>
+     * @return ConcretePaginator<int, Page>
      */
-    public function getUserPages(int $userId, string $sortOrder = 'desc'): Collection
+    public function getUserPages(int $userId, string $sortOrder = 'desc', int $perPage = 25): ConcretePaginator
     {
         // Validate sort order
         $sortOrder = in_array($sortOrder, ['asc', 'desc']) ? $sortOrder : 'desc';
 
+        // Validate per page
+        $perPage = in_array($perPage, [10, 25, 50]) ? $perPage : 25;
+
         return Page::where('user_id', $userId)
             ->orderBy('created_at', $sortOrder)
-            ->get();
+            ->paginate($perPage)
+            ->withQueryString();
     }
 
     private function normalizeUrl(string $url): string

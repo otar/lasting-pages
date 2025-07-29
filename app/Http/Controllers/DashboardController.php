@@ -15,8 +15,10 @@ class DashboardController
     public function index(Request $request): View
     {
         $sortOrder = $request->string('sort', 'desc')->toString();
-        $pages = $this->pageService->getUserPages((int) auth()->id(), $sortOrder);
+        $perPage = $request->integer('per_page', 25);
 
-        return view('dashboard', compact('pages', 'sortOrder'));
+        $pages = $this->pageService->getUserPages((int) auth()->id(), $sortOrder, $perPage);
+
+        return view('dashboard', compact('pages', 'sortOrder', 'perPage'));
     }
 }

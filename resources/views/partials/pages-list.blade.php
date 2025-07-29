@@ -1,22 +1,45 @@
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">My Saved Pages ({{ $pages->count() }})</h4>
-            
+            <h4 class="mb-0">My Saved Pages ({{ $pages->total() }})</h4>
+
             @if($pages->count() > 0)
-                <div class="text-muted small">
-                    Sort: 
-                    @if($sortOrder === 'desc')
-                        <strong>Newest First</strong>
-                    @else
-                        <a href="{{ route('dashboard', ['sort' => 'desc']) }}" class="text-decoration-none">Newest First</a>
-                    @endif
-                    |
-                    @if($sortOrder === 'asc')
-                        <strong>Oldest First</strong>
-                    @else
-                        <a href="{{ route('dashboard', ['sort' => 'asc']) }}" class="text-decoration-none">Oldest First</a>
-                    @endif
+                <div class="d-flex gap-4 text-muted small">
+                    <div>
+                        Sort:
+                        @if($sortOrder === 'desc')
+                            <strong>Newest First</strong>
+                        @else
+                            <a href="{{ route('dashboard', array_merge(request()->query(), ['sort' => 'desc'])) }}" class="text-decoration-none">Newest First</a>
+                        @endif
+                        |
+                        @if($sortOrder === 'asc')
+                            <strong>Oldest First</strong>
+                        @else
+                            <a href="{{ route('dashboard', array_merge(request()->query(), ['sort' => 'asc'])) }}" class="text-decoration-none">Oldest First</a>
+                        @endif
+                    </div>
+
+                    <div>
+                        Show:
+                        @if($perPage === 10)
+                            <strong>10</strong>
+                        @else
+                            <a href="{{ route('dashboard', array_merge(request()->query(), ['per_page' => 10])) }}" class="text-decoration-none">10</a>
+                        @endif
+                        |
+                        @if($perPage === 25)
+                            <strong>25</strong>
+                        @else
+                            <a href="{{ route('dashboard', array_merge(request()->query(), ['per_page' => 25])) }}" class="text-decoration-none">25</a>
+                        @endif
+                        |
+                        @if($perPage === 50)
+                            <strong>50</strong>
+                        @else
+                            <a href="{{ route('dashboard', array_merge(request()->query(), ['per_page' => 50])) }}" class="text-decoration-none">50</a>
+                        @endif
+                    </div>
                 </div>
             @endif
         </div>
@@ -38,10 +61,10 @@
                                             {{ Str::limit($page->title, 40) }}
                                         </h6>
                                     @endif
-                                    <p class="card-text small">
+                                    <p class="card-text small mb-0">
                                         <span class="text-muted">{{ Str::limit($page->url, 40) }}</span>
                                     </p>
-                                    <p class="card-text">
+                                    <p class="card-text mb-0">
                                         <small class="text-muted">
                                             <abbr title="{{ $page->created_at->format('Y-m-d H:i') }}">{{ $page->created_at->diffForHumans() }}</abbr>
                                         </small>
@@ -52,6 +75,12 @@
                     </div>
                 @endforeach
             </div>
+            
+            @if($pages->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $pages->links() }}
+                </div>
+            @endif
         @else
             <div class="text-center py-5">
                 <h5 class="text-muted mb-3">No pages saved yet</h5>

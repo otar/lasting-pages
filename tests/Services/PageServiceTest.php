@@ -3,6 +3,7 @@
 use App\Models\Page;
 use App\Models\User;
 use App\Services\PageService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -175,13 +176,14 @@ describe('Page Service', function () {
         $service = new PageService;
         $pages = $service->getUserPages($user->id);
 
-        $this->assertCount(2, $pages);
+        $this->assertInstanceOf(LengthAwarePaginator::class, $pages);
+        $this->assertEquals(2, $pages->total());
 
-        $firstPage = $pages->first();
-        $lastPage = $pages->last();
-
-        $this->assertNotNull($firstPage);
-        $this->assertNotNull($lastPage);
+        $items = array_values($pages->items());
+        /** @var Page $firstPage */
+        $firstPage = $items[0];
+        /** @var Page $lastPage */
+        $lastPage = $items[1];
 
         $this->assertEquals($newPage->id, $firstPage->id);
         $this->assertEquals($oldPage->id, $lastPage->id);
@@ -200,8 +202,8 @@ describe('Page Service', function () {
         $user1Pages = $service->getUserPages($user1->id);
         $user2Pages = $service->getUserPages($user2->id);
 
-        $this->assertCount(2, $user1Pages);
-        $this->assertCount(1, $user2Pages);
+        $this->assertEquals(2, $user1Pages->total());
+        $this->assertEquals(1, $user2Pages->total());
     });
 
     test('gets user pages in ascending order when requested', function () {
@@ -221,13 +223,13 @@ describe('Page Service', function () {
         $service = new PageService;
         $pages = $service->getUserPages($user->id, 'asc');
 
-        $this->assertCount(2, $pages);
+        $this->assertEquals(2, $pages->total());
 
-        $firstPage = $pages->first();
-        $lastPage = $pages->last();
-
-        $this->assertNotNull($firstPage);
-        $this->assertNotNull($lastPage);
+        $items = array_values($pages->items());
+        /** @var \App\Models\Page $firstPage */
+        $firstPage = $items[0];
+        /** @var \App\Models\Page $lastPage */
+        $lastPage = $items[1];
 
         $this->assertEquals($oldPage->id, $firstPage->id);
         $this->assertEquals($newPage->id, $lastPage->id);
@@ -250,16 +252,55 @@ describe('Page Service', function () {
         $service = new PageService;
         $pages = $service->getUserPages($user->id, 'invalid');
 
-        $this->assertCount(2, $pages);
+        $this->assertEquals(2, $pages->total());
 
-        $firstPage = $pages->first();
-        $lastPage = $pages->last();
-
-        $this->assertNotNull($firstPage);
-        $this->assertNotNull($lastPage);
+        $items = array_values($pages->items());
+        /** @var \App\Models\Page $firstPage */
+        $firstPage = $items[0];
+        /** @var \App\Models\Page $lastPage */
+        $lastPage = $items[1];
 
         // Should default to desc order
         $this->assertEquals($newPage->id, $firstPage->id);
         $this->assertEquals($oldPage->id, $lastPage->id);
+    });
+
+    test('paginates with default 25 per page', function () {
+        /** @var \Tests\TestCase $this */
+        $user = User::factory()->create();
+        Page::factory()->count(30)->create(['user_id' => $user->id]);
+
+        $service = new PageService;
+        $pages = $service->getUserPages($user->id);
+
+        $this->assertEquals(30, $pages->total());
+        $this->assertEquals(25, $pages->perPage());
+        $this->assertCount(25, $pages->items());
+    });
+
+    test('paginates with custom per page value', function () {
+        /** @var \Tests\TestCase $this */
+        $user = User::factory()->create();
+        Page::factory()->count(30)->create(['user_id' => $user->id]);
+
+        $service = new PageService;
+        $pages = $service->getUserPages($user->id, 'desc', 10);
+
+        $this->assertEquals(30, $pages->total());
+        $this->assertEquals(10, $pages->perPage());
+        $this->assertCount(10, $pages->items());
+    });
+
+    test('defaults to 25 per page for invalid value', function () {
+        /** @var \Tests\TestCase $this */
+        $user = User::factory()->create();
+        Page::factory()->count(30)->create(['user_id' => $user->id]);
+
+        $service = new PageService;
+        $pages = $service->getUserPages($user->id, 'desc', 100);
+
+        $this->assertEquals(30, $pages->total());
+        $this->assertEquals(25, $pages->perPage());
+        $this->assertCount(25, $pages->items());
     });
 });
