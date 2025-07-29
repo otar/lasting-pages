@@ -12,6 +12,18 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        purge(),
+        purge({
+            safelist: [
+                // Bootstrap pagination classes
+                'pagination',
+                'page-item',
+                'page-link',
+                'active',
+                'disabled',
+                // Additional pagination-related classes that might be needed
+                /^page-/,
+                /^pagination-/
+            ]
+        }),
     ],
 });

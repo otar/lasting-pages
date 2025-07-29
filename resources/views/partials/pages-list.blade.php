@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">My Saved Pages ({{ $pages->total() }})</h4>
+            <h4 class="mb-0">My Saved Pages <span class="badge rounded-pill text-bg-primary">{{ $pages->total() }}</span></h4>
 
             @if($pages->count() > 0)
                 <div class="d-flex gap-4 text-muted small">
@@ -75,10 +75,10 @@
                     </div>
                 @endforeach
             </div>
-            
+
             @if($pages->hasPages())
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $pages->links() }}
+                    {{ $pages->links('custom.pagination') }}
                 </div>
             @endif
         @else
