@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\BrowserRenderingSnapshotDto;
 use Exception;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;

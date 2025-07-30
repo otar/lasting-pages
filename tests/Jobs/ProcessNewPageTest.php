@@ -1,10 +1,10 @@
 <?php
 
+use App\DataTransferObjects\BrowserRenderingSnapshotDto;
 use App\Jobs\ProcessNewPage;
 use App\Models\Page;
 use App\Models\User;
 use App\Services\BrowserRenderingService;
-use App\Services\BrowserRenderingSnapshotDto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 

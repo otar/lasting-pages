@@ -1,7 +1,7 @@
 <?php
 
+use App\DataTransferObjects\BrowserRenderingSnapshotDto;
 use App\Services\BrowserRenderingService;
-use App\Services\BrowserRenderingSnapshotDto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
