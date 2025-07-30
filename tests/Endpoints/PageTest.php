@@ -3,10 +3,14 @@
 use App\Models\Page;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 
 uses(RefreshDatabase::class);
 
 describe('Page Store Endpoint', function () {
+    beforeEach(function () {
+        Queue::fake();
+    });
     test('authenticated user can create a page with valid data', function () {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create();

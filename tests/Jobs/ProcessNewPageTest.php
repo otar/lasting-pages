@@ -3,6 +3,8 @@
 use App\Jobs\ProcessNewPage;
 use App\Models\Page;
 use App\Models\User;
+use App\Services\BrowserRenderingService;
+use App\Services\BrowserRenderingSnapshotDto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 
@@ -37,11 +39,24 @@ test('process new page job updates is_pending to false', function () {
 
     expect($page->is_pending)->toBeTrue();
 
+    /** @var BrowserRenderingService&\Mockery\MockInterface $mockBrowserService */
+    $mockBrowserService = $this->mock(BrowserRenderingService::class, function (\Mockery\MockInterface $mock) {
+        /** @phpstan-ignore-next-line */
+        $mock->shouldReceive('snapshot')
+            ->once()
+            ->andReturn(new BrowserRenderingSnapshotDto(
+                screenshot: base64_encode('fake-screenshot-data'),
+                html: '<html><body>Test</body></html>'
+            ));
+    });
+
     $job = new ProcessNewPage($page);
-    $job->handle();
+    $job->handle($mockBrowserService);
 
     $page->refresh();
     expect($page->is_pending)->toBeFalse();
+    expect($page->current_snapshot_id)->not->toBeNull();
+    expect($page->current_snapshot_version)->toBe(1);
 });
 
 test('process new page job can be queued', function () {

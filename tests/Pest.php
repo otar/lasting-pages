@@ -12,16 +12,20 @@
 */
 
 pest()->extend(Tests\TestCase::class)
-    // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in(
         'Endpoints',
         'Models',
+        'Jobs',
+        'Observers',
         'Policies',
         'Services',
         'Traits',
-        'Jobs',
-        'Observers',
-    );
+        'View'
+    )
+    ->beforeEach(function () {
+        \Illuminate\Support\Facades\Queue::fake();
+    });
 
 /*
 |--------------------------------------------------------------------------

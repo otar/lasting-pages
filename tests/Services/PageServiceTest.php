@@ -6,11 +6,15 @@ use App\Services\PageService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Validation\ValidationException;
 
 uses(RefreshDatabase::class);
 
 describe('Page Service', function () {
+    beforeEach(function () {
+        Queue::fake();
+    });
     test('creates page with valid data', function () {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create();

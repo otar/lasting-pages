@@ -190,3 +190,6 @@ php artisan make:model ModelName -mf
 ## Migration Guidelines
 
 - When creating a migration, only generate it with up() method, down() is not needed
+
+## Coding Standards
+When working with Laravel/PHP projects, first read the coding guidelines at @laravel-php-guidelines.md

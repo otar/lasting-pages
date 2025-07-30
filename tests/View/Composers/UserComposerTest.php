@@ -23,7 +23,7 @@ describe('UserComposer', function () {
             ->once()
             ->with([
                 'userEmail' => 'test@example.com',
-                'userAvatar' => $userService->gravatarUrl($user),
+                'userAvatar' => $userService->gravatarUrl($user, size: 32),
             ]);
 
         // @phpstan-ignore argument.type

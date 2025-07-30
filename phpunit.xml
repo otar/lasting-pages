@@ -7,12 +7,13 @@
     <testsuites>
         <testsuite name="Functional">
             <directory>tests/Endpoints</directory>
+            <directory>tests/Jobs</directory>
             <directory>tests/Models</directory>
+            <directory>tests/Observers</directory>
             <directory>tests/Policies</directory>
             <directory>tests/Services</directory>
             <directory>tests/Traits</directory>
-            <directory>tests/Jobs</directory>
-            <directory>tests/Observers</directory>
+            <directory>tests/View</directory>
         </testsuite>
     </testsuites>
     <source>

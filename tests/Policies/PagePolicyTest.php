@@ -4,10 +4,14 @@ use App\Models\Page;
 use App\Models\User;
 use App\Policies\PagePolicy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 
 uses(RefreshDatabase::class);
 
 describe('Page Policy', function () {
+    beforeEach(function () {
+        Queue::fake();
+    });
     test('user can view their own page', function () {
         /** @var \Tests\TestCase $this */
         $user = User::factory()->create();
